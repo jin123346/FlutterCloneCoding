@@ -59,58 +59,59 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      body: Stack(children: [
-        IndexedStack(
-          index: _selectedIndex,
-          children: [
-            HomePage(),
-            NoticePage(),
-            OrderPage(),
-            MenuPage(),
-            MyPage(),
+      child: Scaffold(
+        body: Stack(children: [
+          IndexedStack(
+            index: _selectedIndex,
+            children: [
+              HomePage(),
+              NoticePage(),
+              OrderPage(),
+              MenuPage(),
+              MyPage(),
+            ],
+          ),
+          if (isLoading)
+            Container(
+              color: StarbucksTheme.primaryGreen, // 배경색 반투명
+              child: Center(
+                child: Image.asset('assets/images/starbucks-logo.png'),
+              ),
+            ),
+        ]),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          selectedItemColor: StarbucksTheme.primaryGreen,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _selectedIndex,
+          onTap: (index) {
+            changeStackPages(index);
+            if (index == 1) {
+              _showBottomSheet();
+            }
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.house),
+              label: '홈',
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.payment), label: 'pay'),
+            BottomNavigationBarItem(
+              icon: Icon(FontAwesomeIcons.mugHot),
+              label: 'order',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.menu),
+              label: 'menu',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.person),
+              label: 'my',
+            ),
           ],
         ),
-        if (isLoading)
-          Container(
-            color: StarbucksTheme.primaryGreen, // 배경색 반투명
-            child: Center(
-              child: Image.asset('assets/images/starbucks-logo.png'),
-            ),
-          ),
-      ]),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        selectedItemColor: StarbucksTheme.primaryGreen,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          changeStackPages(index);
-          if (index == 1) {
-            _showBottomSheet();
-          }
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.house),
-            label: '홈',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.payment), label: 'pay'),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.mugHot),
-            label: 'order',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: 'menu',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.person),
-            label: 'my',
-          ),
-        ],
       ),
-    ));
+    );
   }
 
   void _showBottomSheet() {

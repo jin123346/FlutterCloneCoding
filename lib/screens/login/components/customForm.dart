@@ -5,7 +5,12 @@ import 'custom_text_form_field.dart';
 class Customform extends StatelessWidget {
   String _uid = '';
   String _password = '';
-  Customform({super.key});
+  final TextEditingController userController;
+  final TextEditingController passwordController;
+  final ScrollController scroll;
+
+  Customform(this.userController, this.passwordController, this.scroll,
+      {super.key});
 
   final _formKey = GlobalKey<FormState>();
 
@@ -17,12 +22,15 @@ class Customform extends StatelessWidget {
         children: [
           CustomTextFormField(
             label: '아이디',
-            onSaved: (newValue) {
-              _uid = newValue ?? '';
-              print('아이디 저장: $newValue');
-            },
+            controller: userController,
+            scroll: scroll,
           ),
           const SizedBox(height: 8),
+          CustomTextFormField(
+            label: '비밀번호',
+            controller: passwordController,
+            scroll: scroll,
+          )
         ],
       ),
     );
